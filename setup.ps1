@@ -13,7 +13,7 @@ if (!(Test-Path -Path $PROFILE -PathType Leaf)) {
             }
         }
 
-        Invoke-RestMethod https://github.com/ChrisTitusTech/powershell-profile/raw/main/Microsoft.PowerShell_profile.ps1 -OutFile $PROFILE
+        Invoke-RestMethod https://github.com/Ujstor/powershell-profile/raw/main/Microsoft.PowerShell_profile.ps1 -OutFile $PROFILE
         Write-Host "The profile @ [$PROFILE] has been created."
         write-host "if you want to add any persistent components, please do so at
         [$HOME\Documents\PowerShell\Profile.ps1] as there is an updater in the installed profile 
@@ -26,7 +26,7 @@ if (!(Test-Path -Path $PROFILE -PathType Leaf)) {
 # If the file already exists, show the message and do nothing.
  else {
 		 Get-Item -Path $PROFILE | Move-Item -Destination oldprofile.ps1 -Force
-		 Invoke-RestMethod https://github.com/ChrisTitusTech/powershell-profile/raw/main/Microsoft.PowerShell_profile.ps1 -OutFile $PROFILE
+		 Invoke-RestMethod https://github.com/Ujstor/powershell-profile/raw/main/Microsoft.PowerShell_profile.ps1 -OutFile $PROFILE
 		 Write-Host "The profile @ [$PROFILE] has been created and old profile removed."
          write-host "Please back up any persistent components of your old profile to [$HOME\Documents\PowerShell\Profile.ps1]
          as there is an updater in the installed profile which uses the hash to update the profile 
@@ -43,16 +43,16 @@ winget install -e --accept-source-agreements --accept-package-agreements JanDeDo
 [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
 $fontFamilies = (New-Object System.Drawing.Text.InstalledFontCollection).Families
 
-# Check if CaskaydiaCove NF is installed
-if ($fontFamilies -notcontains "CaskaydiaCove NF") {
+# Check if Meslo NF is installed
+if ($fontFamilies -notcontains "MesloLGLDZ Nerd Font") {
     
-    # Download and install CaskaydiaCove NF
+    # Download and install Meslo NF
     $webClient = New-Object System.Net.WebClient
-    $webClient.DownloadFile("https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/CascadiaCode.zip", ".\CascadiaCode.zip")
+    $webClient.DownloadFile("https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Meslo.zip", ".\Meslo.zip")
 
-    Expand-Archive -Path ".\CascadiaCode.zip" -DestinationPath ".\CascadiaCode" -Force
+    Expand-Archive -Path ".\Meslo.zip" -DestinationPath ".\Meslo" -Force
     $destination = (New-Object -ComObject Shell.Application).Namespace(0x14)
-    Get-ChildItem -Path ".\CascadiaCode" -Recurse -Filter "*.ttf" | ForEach-Object {
+    Get-ChildItem -Path ".\Meslo" -Recurse -Filter "*.ttf" | ForEach-Object {
         If (-not(Test-Path "C:\Windows\Fonts\$($_.Name)")) {        
             # Install font
             $destination.CopyHere($_.FullName, 0x10)
@@ -60,8 +60,8 @@ if ($fontFamilies -notcontains "CaskaydiaCove NF") {
     }
 
     # Clean up
-    Remove-Item -Path ".\CascadiaCode" -Recurse -Force
-    Remove-Item -Path ".\CascadiaCode.zip" -Force
+    Remove-Item -Path ".\Meslo" -Recurse -Force
+    Remove-Item -Path ".\Meslo.zip" -Force
 }
 
 
